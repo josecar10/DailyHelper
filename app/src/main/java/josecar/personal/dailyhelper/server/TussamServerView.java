@@ -1,5 +1,7 @@
 package josecar.personal.dailyhelper.server;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import josecar.personal.dailyhelper.server.GenericAsyncRequest;
@@ -24,26 +26,23 @@ public class TussamServerView {
 
     public static void RequestStopInfo(Integer stopNumber, final GenericAsyncRequest.AsyncResponse response) {
         //TODO: SOAP petition
+
+        HashMap<String, String> requestProperties = new HashMap<>();
+        requestProperties.put("content-type", "text/xml");
+        requestProperties.put("charset", "utf-8");
+        requestProperties.put("authorization", AUTHORIZATION_HEADER);
+        requestProperties.put("deviceid", generateRandomDeviceId());
+        requestProperties.put("cache-control", "no-cache");
+
+        new GenericAsyncRequest(new GenericAsyncRequest.AsyncResponse() {
+            @Override
+            public void onResponseReceived(ServerResponse serverResponse) {
+                response.onResponseReceived(serverResponse);
+            }
+        }, "POST", requestProperties, String.format(BODY_CONTENT, stopNumber)).execute(URL_SOAP);
     }
 
-    /*
-    private InputStream getArrivalsInputStream(String stopNumber) throws IOException {
-        MediaType mediaType = MediaType.parse("text/xml;charset=utf-8");
-        RequestBody body = RequestBody.create(mediaType, String.format(BODY_CONTENT, stopNumber));
-        Request request = new Request.Builder()
-                .url(URL_SOAP)
-                .post(body)
-                .addHeader("content-type", "text/xml;charset=utf-8")
-                .addHeader("authorization", AUTHORIZATION_HEADER)
-                .addHeader("deviceid", generateRandomDeviceId())
-                .addHeader("cache-control", "no-cache")
-                .build();
-
-        Response response = client.newCall(request).execute();
-        return response.body().byteStream();
-    }*/
-
-    private String generateRandomDeviceId() {
+    public static String generateRandomDeviceId() {
         return UUID.randomUUID().toString();
     }
 }
