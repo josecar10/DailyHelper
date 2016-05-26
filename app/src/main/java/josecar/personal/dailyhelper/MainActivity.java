@@ -4,21 +4,10 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-
-import org.xml.sax.InputSource;
-import org.xml.sax.XMLReader;
-
 import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.UUID;
-
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -90,7 +79,7 @@ class RetrieveFeedTask extends AsyncTask<String, Void, String> {
     protected String doInBackground(String... urls) {
         Log.d("MainActivity", "backround");
         try {
-            URL url = new URLº);
+            URL url = new URL("http://api.sevibus.sloydev.com/llegada/779/?lineas");
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
             Log.d("MainActivity", "inside");
 
