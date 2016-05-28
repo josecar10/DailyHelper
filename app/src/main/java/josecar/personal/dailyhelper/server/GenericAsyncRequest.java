@@ -31,13 +31,6 @@ public class GenericAsyncRequest extends AsyncTask<String, Void, ServerResponse>
         requestData = null;
     }
 
-    public GenericAsyncRequest(AsyncResponse response, String method) {
-        asyncResponse = response;
-        requestMethod = method;
-        requestProperties = null;
-        requestData = null;
-    }
-
     public GenericAsyncRequest(AsyncResponse response, String method, Map<String, String> properties, String data) {
         asyncResponse = response;
         requestMethod = method;
@@ -75,7 +68,7 @@ public class GenericAsyncRequest extends AsyncTask<String, Void, ServerResponse>
                 error = urlConnection.getResponseMessage();
             }
 
-            return new ServerResponse(res, error);
+            return new ServerResponse(res, error, urlConnection.getInputStream());
         } catch (Exception e) {
             Log.e("GenericAsyncRequest", e.toString());
             return new ServerResponse(null, e.toString());

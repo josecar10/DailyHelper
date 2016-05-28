@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        TussamServerView.RequestStopInfo(779, new GenericAsyncRequest.AsyncResponse() {
+        TussamServerView.requestStopInfo(779, new GenericAsyncRequest.AsyncResponse() {
             @Override
             public void onResponseReceived(ServerResponse serverResponse) {
                 onRequestFinished(serverResponse);
