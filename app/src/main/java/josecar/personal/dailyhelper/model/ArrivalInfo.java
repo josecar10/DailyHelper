@@ -9,8 +9,8 @@ public class ArrivalInfo {
     public final Integer time;
     public final Integer distance;
 
-    public ArrivalInfo(String title, Integer time, Integer distance) {
-        this.line = title;
+    public ArrivalInfo(String line, Integer time, Integer distance) {
+        this.line = line;
         this.time = time;
         this.distance = distance;
     }

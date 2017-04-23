@@ -10,8 +10,8 @@ public class LineArrivalInfo {
     public final String line;
     List<ArrivalInfo> arrivals;
 
-    public LineArrivalInfo(String title, List<ArrivalInfo> arrivals) {
-        this.line = title;
+    public LineArrivalInfo(String line, List<ArrivalInfo> arrivals) {
+        this.line = line;
         this.arrivals = arrivals;
     }
 

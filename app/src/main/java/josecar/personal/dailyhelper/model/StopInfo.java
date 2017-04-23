@@ -7,6 +7,10 @@ import java.util.List;
  */
 public class StopInfo {
 
+    public interface StopInfoResponse {
+        void onStopInfoResponse (StopInfo stopInfoResponse);
+    }
+
     public final Integer stopNumber;
     public final String stopName;
     public final List<LineArrivalInfo> lineArrivals;

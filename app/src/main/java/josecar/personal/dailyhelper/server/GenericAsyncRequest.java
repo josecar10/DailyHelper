@@ -63,7 +63,7 @@ public class GenericAsyncRequest extends AsyncTask<String, Void, ServerResponse>
 
             String res = null, error = null;
             if(urlConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-                res = ServerUtils.ReadFromInputStream(new BufferedInputStream(urlConnection.getInputStream()));
+                //res = ServerUtils.ReadFromInputStream(new BufferedInputStream(urlConnection.getInputStream()));
             } else {
                 error = urlConnection.getResponseMessage();
             }

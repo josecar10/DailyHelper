@@ -4,6 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import josecar.personal.dailyhelper.model.StopInfo;
 import josecar.personal.dailyhelper.server.*;
 
 public class MainActivity extends AppCompatActivity {
@@ -19,27 +20,27 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void MakeRequest () {
-        SevibusServerView.RequestStopInfo(779, new GenericAsyncRequest.AsyncResponse() {
+        SevibusServerView.requestStopInfo(779, new StopInfo.StopInfoResponse() {
             @Override
-            public void onResponseReceived(ServerResponse serverResponse) {
-                onRequestFinished(serverResponse);
+            public void onStopInfoResponse(StopInfo stopInfoResponse) {
+                onRequestFinished(stopInfoResponse);
             }
         });
 
-        TussamServerView.requestStopInfo(779, new GenericAsyncRequest.AsyncResponse() {
+        TussamServerView.requestStopInfo(779, new StopInfo.StopInfoResponse() {
             @Override
-            public void onResponseReceived(ServerResponse serverResponse) {
-                onRequestFinished(serverResponse);
+            public void onStopInfoResponse(StopInfo stopInfoResponse) {
+                onRequestFinished(stopInfoResponse);
             }
         });
     }
 
-    void onRequestFinished (ServerResponse response) {
-        if(response.error != null) {
-            Log.e("MainActivity", response.error);
+    void onRequestFinished (StopInfo response) {
+        if(response == null) {
+            Log.e("MainActivity", "Null response");
             return;
         }
 
-        Log.d("MainActivity", response.text);
+        Log.d("MainActivity", "Object parsed. Number: " + response.stopNumber.toString() + "   Name: " + response.stopName + "   ArrivalsCount: " + response.lineArrivals.size());
     }
 }

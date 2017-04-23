@@ -1,5 +1,6 @@
 package josecar.personal.dailyhelper.server;
 
+import android.util.Log;
 import android.util.Xml;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -36,7 +37,7 @@ public class TussamServerView {
     public static final String URL_SOAP = "http://www.infobustussam.com:9005/InfoTusWS/services/InfoTus?WSDL";
     public static final String AUTHORIZATION_HEADER = "Basic aW5mb3R1cy11c2VybW9iaWxlOjJpbmZvdHVzMHVzZXIxbW9iaWxlMg==";
 
-    public static void requestStopInfo(Integer stopNumber, final GenericAsyncRequest.AsyncResponse response) {
+    public static void requestStopInfo(final Integer stopNumber, final StopInfo.StopInfoResponse response) {
         //TODO: SOAP petition
 
         HashMap<String, String> requestProperties = new HashMap<>();
@@ -49,15 +50,19 @@ public class TussamServerView {
         new GenericAsyncRequest(new GenericAsyncRequest.AsyncResponse() {
             @Override
             public void onResponseReceived(ServerResponse serverResponse) {
-                if(serverResponse.error != null) {
+                StopInfo stopInfo = null;
+                if(serverResponse.error == null) {
                     try {
-                        parseXml(serverResponse.rawResponse);
+                        stopInfo = parseXml(serverResponse.rawResponse);
                     } catch (Exception e) {
+                        Log.e("TussamServerView", e.toString());
                         serverResponse.error = e.toString();
                     }
+                } else {
+                    Log.e("TussamServerView", serverResponse.error);
                 }
 
-                response.onResponseReceived(serverResponse);
+                response.onStopInfoResponse(stopInfo);
             }
         }, "POST", requestProperties, String.format(BODY_CONTENT, stopNumber)).execute(URL_SOAP);
     }
